@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "970296559613",
+    "project_id": "agendacorte-dbc2d",
+    "storage_bucket": "agendacorte-dbc2d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:970296559613:android:174affc58897a9022dbb94",
+        "android_client_info": {
+          "package_name": "com.example.agendamento_barber"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrqUw5tpqXaGIK8RNeyZhXPMUj3dGgroc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

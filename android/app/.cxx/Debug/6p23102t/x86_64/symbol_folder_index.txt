@@ -1,0 +1,1 @@
+D:\Projetos_Desenvolvimento\Projetos Flutter\clone_agendaCorte_supabase\agendamento_barber_supabase\build\app\intermediates\cxx\Debug\6p23102t\obj\x86_64

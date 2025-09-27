@@ -1,0 +1,2 @@
+D:/Projetos_Desenvolvimento/Projetos Flutter/clone_agenda_corte/agendamento_barber/android/app/.cxx/Debug/3i2p5ts2/x86/CMakeFiles/edit_cache.dir
+D:/Projetos_Desenvolvimento/Projetos Flutter/clone_agenda_corte/agendamento_barber/android/app/.cxx/Debug/3i2p5ts2/x86/CMakeFiles/rebuild_cache.dir

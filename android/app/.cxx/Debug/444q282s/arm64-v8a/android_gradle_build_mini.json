@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "C:\\Users\\Tonilson\\Documents\\flutter\\packages\\flutter_tools\\gradle\\src\\main\\groovy\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "C:\\Users\\Tonilson\\AppData\\Local\\Android\\sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+      "-C",
+      "D:\\Projetos_Desenvolvimento\\Projetos Flutter\\agendamento_babearia\\agendamento_barber\\android\\app\\.cxx\\Debug\\444q282s\\arm64-v8a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "C:\\Users\\Tonilson\\AppData\\Local\\Android\\sdk\\cmake\\3.22.1\\bin\\ninja.exe",
+    "-C",
+    "D:\\Projetos_Desenvolvimento\\Projetos Flutter\\agendamento_babearia\\agendamento_barber\\android\\app\\.cxx\\Debug\\444q282s\\arm64-v8a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}
