@@ -4,10 +4,6 @@ import 'package:agendamento_barber/repository/auth_service.dart';
 import 'package:agendamento_barber/repository/servicoRepository.dart';
 import 'package:agendamento_barber/utils/utils.dart';
 import 'package:agendamento_barber/utils/validation_mixins.dart';
-import 'package:agendamento_barber/views/administrador/Configuracoes.dart';
-import 'package:agendamento_barber/views/administrador/agendamentos_nao_concluido.dart';
-import 'package:agendamento_barber/views/administrador/login_administrador.dart';
-import 'package:agendamento_barber/views/agendamento/ConsultaAgendamento.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,26 +29,7 @@ class Widgetsdesign with ValidationMixins {
         SizedBox(
           height: 43,
         ),
-        buscar ??
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ConsultaAgendamento(),
-                          ));
-                    },
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      size: 38,
-                    )),
-              ],
-            ),
+
         Text(
           "Olá,",
           style: GoogleFonts.roboto(
@@ -79,23 +56,7 @@ class Widgetsdesign with ValidationMixins {
           height: 20,
         ),
         // botao agendamento
-        Center(
-          child: botao ??
-              buttonIcon(
-                  label: "Consultar Agendamento",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ConsultaAgendamento(),
-                        ));
-                  },
-                  icon: Image.asset(
-                    "asset/calender_consulta.png",
-                    height: 25,
-                    width: 25,
-                  )),
-        ),
+
         //fim botao agendamento
       ],
     );
@@ -155,25 +116,6 @@ class Widgetsdesign with ValidationMixins {
       children: [
         SizedBox(
           height: 43,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ConsultaAgendamento(),
-                      ));
-                },
-                icon: Icon(
-                  Icons.search,
-                  color: Colors.white,
-                  size: 38,
-                )),
-          ],
         ),
         Container(
           decoration: BoxDecoration(
@@ -267,23 +209,7 @@ class Widgetsdesign with ValidationMixins {
           height: 20,
         ),
         // botao agendamento
-        botaoWidget ??
-            Center(
-              child: buttonIcon(
-                  label: "Consultar Agendamento",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ConsultaAgendamento(),
-                        ));
-                  },
-                  icon: Image.asset(
-                    "asset/calender_consulta.png",
-                    height: 25,
-                    width: 25,
-                  )),
-            ),
+
         //fim botao agendamento
       ],
     );
@@ -359,23 +285,7 @@ class Widgetsdesign with ValidationMixins {
           height: 20,
         ),
         // botao agendamento
-        botaoWidget ??
-            Center(
-              child: buttonIcon(
-                  label: "Consultar Agendamento",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ConsultaAgendamento(),
-                        ));
-                  },
-                  icon: Image.asset(
-                    "asset/calender_consulta.png",
-                    height: 25,
-                    width: 25,
-                  )),
-            ),
+
         //fim botao agendamento
       ],
     );
@@ -400,25 +310,6 @@ class Widgetsdesign with ValidationMixins {
         SizedBox(
           height: paddingTop ?? 43,
         ),
-        buscarWidget ??
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ConsultaAgendamento(),
-                          ));
-                    },
-                    icon: Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      size: 38,
-                    )),
-              ],
-            ),
 
         Container(
           decoration: BoxDecoration(
@@ -452,23 +343,7 @@ class Widgetsdesign with ValidationMixins {
           height: 20,
         ),
         // botao agendamento
-        botaoWidget ??
-            Center(
-              child: buttonIcon(
-                  label: "Consultar Agendamento",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ConsultaAgendamento(),
-                        ));
-                  },
-                  icon: Image.asset(
-                    "asset/calender_consulta.png",
-                    height: 25,
-                    width: 25,
-                  )),
-            ),
+
         //fim botao agendamento
       ],
     );
@@ -714,23 +589,7 @@ class Widgetsdesign with ValidationMixins {
           height: 20,
         ),
         // botao agendamento
-        botaoWidget ??
-            Center(
-              child: buttonIcon(
-                  label: "Consultar Agendamento",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ConsultaAgendamento(),
-                        ));
-                  },
-                  icon: Image.asset(
-                    "asset/calender_consulta.png",
-                    height: 25,
-                    width: 25,
-                  )),
-            ),
+
         //fim botao agendamento
       ],
     );
@@ -801,23 +660,7 @@ class Widgetsdesign with ValidationMixins {
           height: 20,
         ),
         // botao agendamento
-        botaoWidget ??
-            Center(
-              child: buttonIcon(
-                  label: "Consultar Agendamento",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ConsultaAgendamento(),
-                        ));
-                  },
-                  icon: Image.asset(
-                    "asset/calender_consulta.png",
-                    height: 25,
-                    width: 25,
-                  )),
-            ),
+
         //fim botao agendamento
       ],
     );
@@ -887,23 +730,7 @@ class Widgetsdesign with ValidationMixins {
           height: 20,
         ),
         // botao agendamento
-        botaoWidget ??
-            Center(
-              child: buttonIcon(
-                  label: "Consultar Agendamento",
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ConsultaAgendamento(),
-                        ));
-                  },
-                  icon: Image.asset(
-                    "asset/calender_consulta.png",
-                    height: 25,
-                    width: 25,
-                  )),
-            ),
+
         //fim botao agendamento
       ],
     );
@@ -2308,113 +2135,4 @@ class Widgetsdesign with ValidationMixins {
   }
 
   //Fim TextFild
-
-  //Drawer Admin
-  Widget adminDrawer({
-    required double heightMedia,
-    required double widthMedia,
-    required BuildContext context,
-    required Profissional profissional,
-    required Estabelecimento estabelecimento,
-  }) {
-    return Drawer(
-      backgroundColor: Color.fromARGB(255, 26, 26, 26),
-      surfaceTintColor: Color.fromARGB(255, 26, 26, 26),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: widthMedia * 0.03),
-        child: Column(
-          children: [
-            SizedBox(height: heightMedia * 0.06),
-            Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: amareloColor, width: 2))),
-              child: Image.network(
-                estabelecimento.urlLogo,
-                height: heightMedia * 0.26,
-                width: widthMedia,
-                fit: BoxFit.scaleDown,
-              ),
-            ),
-            //Menu de ListTile
-            ListTile(
-              leading: Icon(
-                Icons.dashboard,
-                color: amareloColor,
-              ),
-              title: Text(
-                "Dashboard",
-                style: GoogleFonts.roboto(color: Colors.white, fontSize: 22),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.view_stream,
-                color: amareloColor,
-              ),
-              title: Text(
-                "Agendamentos Não Concluído",
-                style: GoogleFonts.roboto(color: Colors.white, fontSize: 18),
-              ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AgendamentosNaoConcluido(
-                        estabelecimento: estabelecimento,
-                        profissional: profissional,
-                      ),
-                    ));
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.settings,
-                color: amareloColor,
-              ),
-              title: Text(
-                "Configurações",
-                style: GoogleFonts.roboto(color: Colors.white, fontSize: 22),
-              ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Configuracoes(
-                        estabelecimento: estabelecimento,
-                      ),
-                    ));
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.logout,
-                color: amareloColor,
-              ),
-              title: Text(
-                "Sair",
-                style: GoogleFonts.roboto(color: Colors.white, fontSize: 22),
-              ),
-              onTap: () async {
-                await AuthService().limpaPeistencia();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LoginAdministrador(
-                        estabelecimento: estabelecimento,
-                      ),
-                    ));
-              },
-            ),
-            //Fim Menu de ListTile
-          ],
-        ),
-      ),
-    );
-  }
-  //Fim Drawer Admin
 }
