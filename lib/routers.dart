@@ -1,6 +1,7 @@
 import 'package:agendamento_barber/models/Estabelecimento.dart';
 import 'package:agendamento_barber/models/Profissional.dart';
 import 'package:agendamento_barber/views/lading_page.dart';
+import 'package:agendamento_barber/views/manutencao_page.dart';
 import 'package:agendamento_barber/views/store_not_found.dart';
 import 'package:agendamento_barber/views/sections_lading_page/set_up_landing_page.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +32,12 @@ class AppRouter {
         builder: (context, state) => SetUpLandingPage(),
       ),
       GoRoute(
-        path: '/loja-nao-encontrada',
+        path: '/barbearia-nao-encontrada',
         builder: (context, state) => const StoreNotFound(),
+      ),
+      GoRoute(
+        path: '/manutencao',
+        builder: (context, state) => ManutencaoPage(),
       ),
     ],
   );

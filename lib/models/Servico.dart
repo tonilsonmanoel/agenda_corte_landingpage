@@ -6,6 +6,7 @@ class Servico {
   bool ativo;
   int? idProfissional;
   bool ativoLadingpage;
+  int idEstabelecimento;
   Servico({
     this.uid,
     required this.nome,
@@ -14,5 +15,6 @@ class Servico {
     required this.ativo,
     this.idProfissional,
     required this.ativoLadingpage,
+    required this.idEstabelecimento,
   });
 }

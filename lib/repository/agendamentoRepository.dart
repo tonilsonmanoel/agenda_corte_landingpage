@@ -131,6 +131,164 @@ class Agendamentorepository {
               ativo: s.ativo,
               ativoLadingpage: s.ativoLadingpage,
               idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
+              uid: s.uid));
+        }
+
+        Agendamento agendamento = Agendamento(
+            uid: documentos[i]["id"],
+            uidProfissional: documentos[i]["idprofissional"],
+            data: documentos[i]["data"],
+            horario: documentos[i]["horario"],
+            dateTimeAgenda: date,
+            diaDaSemana: documentos[i]["diadasemana"],
+            concluido: documentos[i]["concluido"],
+            confimado: documentos[i]["confimado"],
+            nomeCliente: documentos[i]["nomecliente"],
+            totalAgendamento: documentos[i]["totalagendamento"],
+            nomeProfissional: documentos[i]["nomeprofissional"],
+            telefoneCliente: documentos[i]["telefonecliente"],
+            codeTelefoneCliente: documentos[i]["code_telefone"],
+            isoCodePhone: documentos[i]["iso_code_phone"],
+            idEstabelecimento: documentos[i]["idestabelecimento"],
+            servicos: servicos);
+
+        agentes.add(agendamento);
+      } catch (e) {
+        print("Erro ao processar documento $i: ${e.toString()}");
+      }
+    }
+
+    return agentes;
+  }
+
+  Future<List<Agendamento>> getAgendamentosNomeCliente(
+      {required int uidProfissional,
+      required bool isAdmin,
+      required String nomeCliente,
+      required int idEstabelecimento}) async {
+    DateTime dateTimeNow = DateTime.now();
+    DateTime data = DateTime(
+      dateTimeNow.year,
+      dateTimeNow.month,
+      dateTimeNow.day,
+    );
+
+    var documentos = [];
+    if (isAdmin) {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("concluido", false)
+          .eq("idestabelecimento", idEstabelecimento)
+          .like("nomecliente", "%$nomeCliente%")
+          .order("datetime");
+    } else {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("idprofissional", uidProfissional)
+          .eq("idestabelecimento", idEstabelecimento)
+          .like("nomecliente", "%$nomeCliente%")
+          .eq("concluido", false)
+          .order("datetime");
+    }
+
+    List<Agendamento> agentes = [];
+    for (var i = 0; i < documentos.length; i++) {
+      try {
+        final data = documentos[i]["datetime"];
+
+        DateTime date = DateTime.parse(data);
+        var servicosResult = await Servicorepository()
+            .getServicosAgendamento(idAgendamento: documentos[i]["id"]);
+
+        List<Servico> servicos = [];
+
+        for (var s in servicosResult) {
+          servicos.add(Servico(
+              nome: s.nome,
+              valor: s.valor,
+              urlImg: s.urlImg,
+              ativo: s.ativo,
+              ativoLadingpage: s.ativoLadingpage,
+              idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
+              uid: s.uid));
+        }
+
+        Agendamento agendamento = Agendamento(
+            uid: documentos[i]["id"],
+            uidProfissional: documentos[i]["idprofissional"],
+            data: documentos[i]["data"],
+            horario: documentos[i]["horario"],
+            dateTimeAgenda: date,
+            diaDaSemana: documentos[i]["diadasemana"],
+            concluido: documentos[i]["concluido"],
+            confimado: documentos[i]["confimado"],
+            nomeCliente: documentos[i]["nomecliente"],
+            totalAgendamento: documentos[i]["totalagendamento"],
+            nomeProfissional: documentos[i]["nomeprofissional"],
+            telefoneCliente: documentos[i]["telefonecliente"],
+            codeTelefoneCliente: documentos[i]["code_telefone"],
+            isoCodePhone: documentos[i]["iso_code_phone"],
+            idEstabelecimento: documentos[i]["idestabelecimento"],
+            servicos: servicos);
+
+        agentes.add(agendamento);
+      } catch (e) {
+        print("Erro ao processar documento $i: ${e.toString()}");
+      }
+    }
+
+    return agentes;
+  }
+
+  Future<List<Agendamento>> getAgendamentosRealizadosNomeCliente(
+      {required int uidProfissional,
+      required bool isAdmin,
+      required String nomeCliente,
+      required int idEstabelecimento}) async {
+    var documentos = [];
+    if (isAdmin) {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("concluido", true)
+          .eq("idestabelecimento", idEstabelecimento)
+          .like("nomecliente", "%$nomeCliente%")
+          .order("datetime");
+    } else {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("idprofissional", uidProfissional)
+          .eq("idestabelecimento", idEstabelecimento)
+          .like("nomecliente", "%$nomeCliente%")
+          .eq("concluido", true)
+          .order("datetime");
+    }
+
+    List<Agendamento> agentes = [];
+    for (var i = 0; i < documentos.length; i++) {
+      try {
+        final data = documentos[i]["datetime"];
+
+        DateTime date = DateTime.parse(data);
+        var servicosResult = await Servicorepository()
+            .getServicosAgendamento(idAgendamento: documentos[i]["id"]);
+
+        List<Servico> servicos = [];
+
+        for (var s in servicosResult) {
+          servicos.add(Servico(
+              nome: s.nome,
+              valor: s.valor,
+              urlImg: s.urlImg,
+              ativo: s.ativo,
+              ativoLadingpage: s.ativoLadingpage,
+              idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
               uid: s.uid));
         }
 
@@ -267,6 +425,7 @@ class Agendamentorepository {
               ativo: s.ativo,
               ativoLadingpage: s.ativoLadingpage,
               idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
               uid: s.uid));
         }
 
@@ -342,6 +501,7 @@ class Agendamentorepository {
               urlImg: s.urlImg,
               ativo: s.ativo,
               ativoLadingpage: s.ativoLadingpage,
+              idEstabelecimento: s.idEstabelecimento,
               idProfissional: s.idProfissional,
               uid: s.uid));
         }
@@ -479,6 +639,7 @@ class Agendamentorepository {
               ativo: s.ativo,
               ativoLadingpage: s.ativoLadingpage,
               idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
               uid: s.uid));
         }
 
@@ -509,28 +670,29 @@ class Agendamentorepository {
     return agentes;
   }
 
-  Future<List<Agendamento>> getAgendamentosNaoConcluidos(
+  // Agendamentos Pendentes
+
+  Future<List<Agendamento>> getAgendamentosPendenteNomeCliente(
       {required int uidProfissional,
       required bool isAdmin,
+      required String nomeCliente,
       required int idEstabelecimento}) async {
     var documentos = [];
     if (isAdmin) {
       documentos = await supabase
           .from("agendamentos")
           .select()
-          .eq("idestabelecimento", idEstabelecimento)
-          .lte("datetime",
-              DateTime.now().add(Duration(days: 1)).toIso8601String())
           .eq("concluido", false)
+          .eq("idestabelecimento", idEstabelecimento)
+          .like("nomecliente", "%$nomeCliente%")
           .order("datetime");
     } else {
       documentos = await supabase
           .from("agendamentos")
           .select()
-          .eq("idestabelecimento", idEstabelecimento)
           .eq("idprofissional", uidProfissional)
-          .lte("datetime",
-              DateTime.now().add(Duration(days: 1)).toIso8601String())
+          .eq("idestabelecimento", idEstabelecimento)
+          .like("nomecliente", "%$nomeCliente%")
           .eq("concluido", false)
           .order("datetime");
     }
@@ -554,6 +716,377 @@ class Agendamentorepository {
               ativo: s.ativo,
               ativoLadingpage: s.ativoLadingpage,
               idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
+              uid: s.uid));
+        }
+
+        Agendamento agendamento = Agendamento(
+            uid: documentos[i]["id"],
+            uidProfissional: documentos[i]["idprofissional"],
+            data: documentos[i]["data"],
+            horario: documentos[i]["horario"],
+            dateTimeAgenda: date,
+            diaDaSemana: documentos[i]["diadasemana"],
+            concluido: documentos[i]["concluido"],
+            confimado: documentos[i]["confimado"],
+            nomeCliente: documentos[i]["nomecliente"],
+            totalAgendamento: documentos[i]["totalagendamento"],
+            nomeProfissional: documentos[i]["nomeprofissional"],
+            telefoneCliente: documentos[i]["telefonecliente"],
+            codeTelefoneCliente: documentos[i]["code_telefone"],
+            isoCodePhone: documentos[i]["iso_code_phone"],
+            idEstabelecimento: documentos[i]["idestabelecimento"],
+            servicos: servicos);
+
+        agentes.add(agendamento);
+      } catch (e) {
+        print("Erro ao processar documento $i: ${e.toString()}");
+      }
+    }
+
+    return agentes;
+  }
+
+  Future<List<Agendamento>> getAgendamentosPendenteProfissional(
+      {required int uidProfissional,
+      String? buscar = "",
+      required bool isAdmin,
+      required int idEstabelecimento}) async {
+    var documentos = [];
+
+    if (isAdmin) {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("idestabelecimento", idEstabelecimento)
+          .eq("concluido", false)
+          .ilike("nomecliente", '%%')
+          .order("datetime");
+    } else {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("idestabelecimento", idEstabelecimento)
+          .eq("idprofissional", uidProfissional)
+          .eq("concluido", false)
+          .ilike("nomecliente", '%%')
+          .order("datetime");
+    }
+
+    List<Agendamento> agentes = [];
+    for (var i = 0; i < documentos.length; i++) {
+      try {
+        final data = documentos[i]["datetime"];
+
+        DateTime date = DateTime.parse(data);
+
+        var servicosResult = await Servicorepository()
+            .getServicosAgendamento(idAgendamento: documentos[i]["id"]);
+
+        List<Servico> servicos = [];
+
+        for (var s in servicosResult) {
+          servicos.add(Servico(
+              nome: s.nome,
+              valor: s.valor,
+              urlImg: s.urlImg,
+              ativo: s.ativo,
+              ativoLadingpage: s.ativoLadingpage,
+              idEstabelecimento: s.idEstabelecimento,
+              idProfissional: s.idProfissional,
+              uid: s.uid));
+        }
+
+        Agendamento agendamento = Agendamento(
+            uid: documentos[i]["id"],
+            uidProfissional: documentos[i]["idprofissional"],
+            data: documentos[i]["data"],
+            horario: documentos[i]["horario"],
+            dateTimeAgenda: date,
+            diaDaSemana: documentos[i]["diadasemana"],
+            concluido: documentos[i]["concluido"],
+            confimado: documentos[i]["confimado"],
+            nomeCliente: documentos[i]["nomecliente"],
+            totalAgendamento: documentos[i]["totalagendamento"],
+            nomeProfissional: documentos[i]["nomeprofissional"],
+            telefoneCliente: documentos[i]["telefonecliente"],
+            codeTelefoneCliente: documentos[i]["code_telefone"],
+            isoCodePhone: documentos[i]["iso_code_phone"],
+            idEstabelecimento: documentos[i]["idestabelecimento"],
+            servicos: servicos);
+
+        agentes.add(agendamento);
+      } catch (e) {
+        print("Erro ao processar documento $i: $e");
+      }
+    }
+
+    return agentes;
+  }
+
+  Future<List<Agendamento>> getAgendamentosPendenteDateProfissional(
+      {required int uidProfissional,
+      List<DateTime?>? datasSelecionadas,
+      required bool isAdmin,
+      required int idEstabelecimento}) async {
+    var documentos = [];
+
+    if (datasSelecionadas!.length == 2) {
+      if (isAdmin) {
+        documentos = await supabase
+            .from("agendamentos")
+            .select()
+            .eq("idestabelecimento", idEstabelecimento)
+            .gte('datetime', datasSelecionadas[0]!.toIso8601String())
+            .lte(
+                'datetime',
+                datasSelecionadas[1]!
+                    .add(Duration(hours: 23, minutes: 59, seconds: 59))
+                    .toIso8601String())
+            .eq("concluido", false)
+            .order("datetime");
+      } else {
+        documentos = await supabase
+            .from("agendamentos")
+            .select()
+            .eq("idestabelecimento", idEstabelecimento)
+            .gte('datetime', datasSelecionadas[0]!.toIso8601String())
+            .lte(
+                'datetime',
+                datasSelecionadas[1]!
+                    .add(Duration(hours: 23, minutes: 59, seconds: 59))
+                    .toIso8601String())
+            .eq("idprofissional", uidProfissional)
+            .eq("concluido", false)
+            .order("datetime");
+      }
+    }
+    if (datasSelecionadas.length == 1) {
+      if (isAdmin) {
+        documentos = await supabase
+            .from("agendamentos")
+            .select()
+            .eq("idestabelecimento", idEstabelecimento)
+            .gte('datetime', datasSelecionadas[0]!.toIso8601String())
+            .lte(
+                'datetime',
+                datasSelecionadas[0]!
+                    .add(Duration(hours: 23, minutes: 59, seconds: 59))
+                    .toIso8601String())
+            .eq("concluido", false)
+            .order("datetime");
+      } else {
+        documentos = await supabase
+            .from("agendamentos")
+            .select()
+            .eq("idestabelecimento", idEstabelecimento)
+            .gte('datetime', datasSelecionadas[0]!.toIso8601String())
+            .lte(
+                'datetime',
+                datasSelecionadas[0]!
+                    .add(Duration(hours: 23, minutes: 59, seconds: 59))
+                    .toIso8601String())
+            .eq("idprofissional", uidProfissional)
+            .eq("concluido", false)
+            .order("datetime");
+      }
+    }
+
+    if (datasSelecionadas[0] == null) {
+      if (isAdmin) {
+        documentos = await supabase
+            .from("agendamentos")
+            .select()
+            .eq("idestabelecimento", idEstabelecimento)
+            .eq("concluido", false)
+            .order("datetime");
+      } else {
+        documentos = await supabase
+            .from("agendamentos")
+            .select()
+            .eq("idestabelecimento", idEstabelecimento)
+            .eq("idprofissional", uidProfissional)
+            .eq("concluido", false)
+            .order("datetime");
+      }
+    }
+
+    List<Agendamento> agentes = [];
+    for (var i = 0; i < documentos.length; i++) {
+      try {
+        final data = documentos[i]["datetime"];
+
+        DateTime date = DateTime.parse(data);
+        var servicosResult = await Servicorepository()
+            .getServicosAgendamento(idAgendamento: documentos[i]["id"]);
+
+        List<Servico> servicos = [];
+
+        for (var s in servicosResult) {
+          servicos.add(Servico(
+              nome: s.nome,
+              valor: s.valor,
+              urlImg: s.urlImg,
+              ativo: s.ativo,
+              ativoLadingpage: s.ativoLadingpage,
+              idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
+              uid: s.uid));
+        }
+
+        Agendamento agendamento = Agendamento(
+            uid: documentos[i]["id"],
+            uidProfissional: documentos[i]["idprofissional"],
+            data: documentos[i]["data"],
+            horario: documentos[i]["horario"],
+            dateTimeAgenda: date,
+            diaDaSemana: documentos[i]["diadasemana"],
+            concluido: documentos[i]["concluido"],
+            confimado: documentos[i]["confimado"],
+            nomeCliente: documentos[i]["nomecliente"],
+            totalAgendamento: documentos[i]["totalagendamento"],
+            nomeProfissional: documentos[i]["nomeprofissional"],
+            telefoneCliente: documentos[i]["telefonecliente"],
+            codeTelefoneCliente: documentos[i]["code_telefone"],
+            isoCodePhone: documentos[i]["iso_code_phone"],
+            idEstabelecimento: documentos[i]["idestabelecimento"],
+            servicos: servicos);
+
+        agentes.add(agendamento);
+      } catch (e) {
+        print("Erro ao processar documento $i: $e");
+      }
+    }
+
+    return agentes;
+  }
+
+  // Agendamentos Nao Concluidos
+
+  Future<List<Agendamento>> getAgendamentosNaoConcluidoNome(
+      {required int uidProfissional,
+      required bool isAdmin,
+      required String nomeCliente,
+      required int idEstabelecimento}) async {
+    var documentos = [];
+    if (isAdmin) {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("concluido", false)
+          .eq("idestabelecimento", idEstabelecimento)
+          .lte("datetime",
+              DateTime.now().add(Duration(days: 1)).toIso8601String())
+          .like("nomecliente", "%$nomeCliente%")
+          .eq("concluido", false)
+          .order("datetime");
+    } else {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("idprofissional", uidProfissional)
+          .eq("idestabelecimento", idEstabelecimento)
+          .lte("datetime",
+              DateTime.now().add(Duration(days: 1)).toIso8601String())
+          .like("nomecliente", "%$nomeCliente%")
+          .eq("concluido", false)
+          .order("datetime");
+    }
+
+    List<Agendamento> agentes = [];
+    for (var i = 0; i < documentos.length; i++) {
+      try {
+        final data = documentos[i]["datetime"];
+
+        DateTime date = DateTime.parse(data);
+        var servicosResult = await Servicorepository()
+            .getServicosAgendamento(idAgendamento: documentos[i]["id"]);
+
+        List<Servico> servicos = [];
+
+        for (var s in servicosResult) {
+          servicos.add(Servico(
+              nome: s.nome,
+              valor: s.valor,
+              urlImg: s.urlImg,
+              ativo: s.ativo,
+              ativoLadingpage: s.ativoLadingpage,
+              idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
+              uid: s.uid));
+        }
+
+        Agendamento agendamento = Agendamento(
+            uid: documentos[i]["id"],
+            uidProfissional: documentos[i]["idprofissional"],
+            data: documentos[i]["data"],
+            horario: documentos[i]["horario"],
+            dateTimeAgenda: date,
+            diaDaSemana: documentos[i]["diadasemana"],
+            concluido: documentos[i]["concluido"],
+            confimado: documentos[i]["confimado"],
+            nomeCliente: documentos[i]["nomecliente"],
+            totalAgendamento: documentos[i]["totalagendamento"],
+            nomeProfissional: documentos[i]["nomeprofissional"],
+            telefoneCliente: documentos[i]["telefonecliente"],
+            codeTelefoneCliente: documentos[i]["code_telefone"],
+            isoCodePhone: documentos[i]["iso_code_phone"],
+            idEstabelecimento: documentos[i]["idestabelecimento"],
+            servicos: servicos);
+
+        agentes.add(agendamento);
+      } catch (e) {
+        print("Erro ao processar documento $i: ${e.toString()}");
+      }
+    }
+
+    return agentes;
+  }
+
+  Future<List<Agendamento>> getAgendamentosNaoConcluidos(
+      {required int uidProfissional,
+      required bool isAdmin,
+      required int idEstabelecimento}) async {
+    var documentos = [];
+    if (isAdmin) {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("idestabelecimento", idEstabelecimento)
+          .lte("datetime", DateTime.now().toIso8601String())
+          .eq("concluido", false)
+          .order("datetime");
+    } else {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("idestabelecimento", idEstabelecimento)
+          .eq("idprofissional", uidProfissional)
+          .lte("datetime", DateTime.now().toIso8601String())
+          .eq("concluido", false)
+          .order("datetime");
+    }
+
+    List<Agendamento> agentes = [];
+    for (var i = 0; i < documentos.length; i++) {
+      try {
+        final data = documentos[i]["datetime"];
+
+        DateTime date = DateTime.parse(data);
+        var servicosResult = await Servicorepository()
+            .getServicosAgendamento(idAgendamento: documentos[i]["id"]);
+
+        List<Servico> servicos = [];
+
+        for (var s in servicosResult) {
+          servicos.add(Servico(
+              nome: s.nome,
+              valor: s.valor,
+              urlImg: s.urlImg,
+              ativo: s.ativo,
+              ativoLadingpage: s.ativoLadingpage,
+              idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
               uid: s.uid));
         }
 
@@ -692,6 +1225,7 @@ class Agendamentorepository {
               ativo: s.ativo,
               ativoLadingpage: s.ativoLadingpage,
               idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
               uid: s.uid));
         }
 
@@ -720,6 +1254,8 @@ class Agendamentorepository {
     }
     return agentes;
   }
+
+  //Agendamentos Profissional
 
   Future<List<Agendamento>> getAgendamentosProfissionalLimite(
       {required int uidProfissional,
@@ -761,7 +1297,6 @@ class Agendamentorepository {
 
     for (var i = 0; i < documentos.length; i++) {
       try {
-        print('documentos ${documentos.length}');
         final data = documentos[i]["datetime"];
 
         DateTime date = DateTime.parse(data);
@@ -779,7 +1314,9 @@ class Agendamentorepository {
               ativo: s.ativo,
               ativoLadingpage: s.ativoLadingpage,
               idProfissional: s.idProfissional,
+              idEstabelecimento: s.idEstabelecimento,
               uid: s.uid));
+          // prints individuais para cada parâmetro
         }
         Agendamento agendamento = Agendamento(
             uid: documentos[i]["id"],
@@ -876,6 +1413,32 @@ class Agendamentorepository {
     return documentos.count;
   }
 
+  Future<int> countAgendamentoPendentes(
+      {required int uidProfissional,
+      required bool isAdmin,
+      required int idEstabelecimento}) async {
+    var documentos;
+    if (isAdmin) {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("idestabelecimento", idEstabelecimento)
+          .eq("confimado", false)
+          .order("datetime")
+          .count();
+    } else {
+      documentos = await supabase
+          .from("agendamentos")
+          .select()
+          .eq("idestabelecimento", idEstabelecimento)
+          .eq("confimado", false)
+          .eq("idprofissional", uidProfissional)
+          .order("datetime")
+          .count();
+    }
+    return documentos.count;
+  }
+
   Future<double> totalFaturamentoMes(
       {required int idProfissional,
       required bool isAdmin,
@@ -946,6 +1509,7 @@ class Agendamentorepository {
             urlImg: s.urlImg,
             ativo: s.ativo,
             ativoLadingpage: s.ativoLadingpage,
+            idEstabelecimento: s.idEstabelecimento,
             idProfissional: s.idProfissional,
             uid: s.uid));
       }

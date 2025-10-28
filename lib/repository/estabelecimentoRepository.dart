@@ -27,6 +27,8 @@ class Estabelecimentorepository {
       "razao_social": estabelecimento.razaoSocial,
       "set_up": estabelecimento.setUp,
       "iso_code_phone": estabelecimento.isoCodePhone,
+      "urlbarbearia": estabelecimento.urlBarbearia,
+      "ativo_landing": estabelecimento.ativoLanding
     };
     //await db.collection("estabelecimento").add(estabelecimentoJson);
     var idEstabecimento = await supabase
@@ -62,9 +64,46 @@ class Estabelecimentorepository {
         sobreNosImg: documentos.first["sobre_nos_img"],
         isoCodePhone: documentos.first["iso_code_phone"],
         urlBarbearia: documentos.first["urlbarbearia"],
+        ativoLanding: documentos.first["ativo_landing"],
         urlIframeMapa: documentos.first["urliframemapa"]);
 
     return estabelecimento;
+  }
+
+  Future<Estabelecimento?> getEstabelecimentoRepositoryId(
+      {required int id}) async {
+    // var documentos = await db.collection("estabelecimento").get();
+    var documentos =
+        await supabase.from('estabelecimento').select().eq("id", id);
+
+    if (documentos.isNotEmpty) {
+      Estabelecimento estabelecimento = Estabelecimento(
+          uid: documentos.first["id"],
+          nome: documentos.first["nome"],
+          telefone: documentos.first["telefone"],
+          codeTelefone: documentos.first["codigo_telefone"],
+          telefoneWhatsapp: documentos.first["telefonewhatsapp"],
+          codeTelefoneWhatsapp: documentos.first["codigo_telefone_whatsapp"],
+          cep: documentos.first["cep"],
+          endereco: documentos.first["endereco"],
+          complemento: documentos.first["complemento"],
+          urlLogo: documentos.first["urllogo"],
+          cnpj: documentos.first["cnpj"],
+          email: documentos.first["email"],
+          horarioFuncionamento: documentos.first["horario_funcionamento"],
+          razaoSocial: documentos.first["razao_social"],
+          setUp: documentos.first["set_up"],
+          sobreNos: documentos.first["sobre_nos"],
+          sobreNosImg: documentos.first["sobre_nos_img"],
+          isoCodePhone: documentos.first["iso_code_phone"],
+          urlBarbearia: documentos.first["urlbarbearia"],
+          ativoLanding: documentos.first["ativo_landing"],
+          urlIframeMapa: documentos.first["urliframemapa"]);
+
+      return estabelecimento;
+    } else {
+      return null;
+    }
   }
 
   /// Busca um estabelecimento pelo campo `url_loja`.
@@ -99,6 +138,7 @@ class Estabelecimentorepository {
           sobreNosImg: documentos["sobre_nos_img"],
           isoCodePhone: documentos["iso_code_phone"],
           urlBarbearia: documentos["urlbarbearia"],
+          ativoLanding: documentos["ativo_landing"],
           urlIframeMapa: documentos["urliframemapa"]);
 
       return estabelecimento;
@@ -163,6 +203,8 @@ class Estabelecimentorepository {
       "horario_funcionamento": estabelecimento.horarioFuncionamento,
       "urliframemapa": estabelecimento.urlIframeMapa,
       "iso_code_phone": estabelecimento.isoCodePhone,
+      "urlbarbearia": estabelecimento.urlBarbearia,
+      "ativo_landing": estabelecimento.ativoLanding
     };
     await supabase
         .from('estabelecimento')

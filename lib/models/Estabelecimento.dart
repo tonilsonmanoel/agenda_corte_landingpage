@@ -19,6 +19,7 @@ class Estabelecimento {
   bool? setUp;
   String isoCodePhone;
   String urlBarbearia;
+  bool ativoLanding;
 
   Estabelecimento(
       {required this.nome,
@@ -40,6 +41,7 @@ class Estabelecimento {
       this.setUp,
       this.sobreNos,
       this.sobreNosImg,
+      required this.ativoLanding,
       required this.urlBarbearia});
   Estabelecimento.vazio(
       {this.nome = "",
@@ -59,5 +61,6 @@ class Estabelecimento {
       this.sobreNos = "",
       this.sobreNosImg = "",
       this.isoCodePhone = "",
+      this.ativoLanding = false,
       this.urlBarbearia = ""});
 }
