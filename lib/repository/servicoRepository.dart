@@ -15,6 +15,7 @@ class Servicorepository {
       "ativo": servico.ativo,
       "id_profissional": uidProfissional,
       "ativo_ladingpage": servico.ativoLadingpage,
+      "idestabelecimento": servico.idEstabelecimento
     };
 
     await supabase.from("servicos").insert(servicoJson);
@@ -36,6 +37,7 @@ class Servicorepository {
           urlImg: documentos[i]["urlimg"],
           idProfissional: documentos[i]["id_profissional"],
           ativoLadingpage: documentos[i]["ativo_ladingpage"],
+          idEstabelecimento: documentos[i]["idestabelecimento"],
           ativo: documentos[i]["ativo"]);
 
       servicos.add(servico);
@@ -60,11 +62,23 @@ class Servicorepository {
           urlImg: documentos[i]["urlimg"],
           idProfissional: documentos[i]["id_profissional"],
           ativoLadingpage: documentos[i]["ativo_ladingpage"],
+          idEstabelecimento: documentos[i]["idestabelecimento"],
           ativo: documentos[i]["ativo"]);
 
       servicos.add(servico);
     }
     return servicos;
+  }
+
+  Future<int> countServicoAtivo({required int idEstabelecimento}) async {
+    var documentos = await supabase
+        .from("servicos")
+        .select("ativo")
+        .eq("idestabelecimento", idEstabelecimento)
+        .eq("ativo", true)
+        .count();
+
+    return documentos.count;
   }
 
   Future<List<Servico>> getServicosAgendamento(
@@ -84,6 +98,7 @@ class Servicorepository {
           urlImg: documentos[i]["servicos"]["urlimg"],
           ativoLadingpage: documentos[i]["servicos"]["ativo_ladingpage"],
           idProfissional: documentos[i]["servicos"]["id_profissional"],
+          idEstabelecimento: documentos[i]["servicos"]["idestabelecimento"],
           ativo: documentos[i]["servicos"]["ativo"]);
       servicos.add(servico);
     }
@@ -101,7 +116,8 @@ class Servicorepository {
       "urlimg": servico.urlImg,
       "ativo": servico.ativo,
       "ativo_ladingpage": servico.ativoLadingpage,
-      "id_profissional": servico.idProfissional
+      "id_profissional": servico.idProfissional,
+      "idestabelecimento": servico.idEstabelecimento
     };
 
     await supabase.from("servicos").update(servico_json).eq("id", uidServico);

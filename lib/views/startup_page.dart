@@ -24,18 +24,23 @@ class _StartupPageState extends State<StartupPage> {
       final estabelecimento = await repo.getEstabelecimentoByUrl(uri.host);
       if (!mounted) return;
 
-      if (estabelecimento != null) {
+      if (estabelecimento != null &&
+          estabelecimento.ativoLanding &&
+          estabelecimento.siteManutencao == false) {
         print('uri.path: ${uri.path}');
 
         GoRouter.of(context)
             .go('/', extra: {'estabelecimento': estabelecimento});
+      } else if (estabelecimento != null &&
+          (estabelecimento.ativoLanding == false ||
+              estabelecimento.siteManutencao == true)) {
+        GoRouter.of(context).go('/manutencao');
       } else {
-        print('estabelecimento null, indo para loja nao encontrada');
-        GoRouter.of(context).go('/loja-nao-encontrada');
+        GoRouter.of(context).go('/barbearia-nao-encontrada');
       }
     } catch (e) {
       if (!mounted) return;
-      GoRouter.of(context).go('/loja-nao-encontrada');
+      GoRouter.of(context).go('/barbearia-nao-encontrada');
     }
   }
 

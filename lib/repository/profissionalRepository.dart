@@ -1,4 +1,6 @@
+import 'package:agendamento_barber/models/Estabelecimento.dart';
 import 'package:agendamento_barber/models/Profissional.dart';
+import 'package:agendamento_barber/repository/estabelecimentoRepository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:xor_encryption/xor_encryption.dart';
@@ -9,29 +11,24 @@ class Profissionalrepository {
   //Metodos Login
 
   Future<Map<String, dynamic>> getLoginProfissional(
-      {required String email,
-      required String senha,
-      required int idEstabelecimento}) async {
+      {required String email, required String senha}) async {
     String mensagem = "Email ou senhas incorreto";
     Profissional? profissional;
+    Estabelecimento? estabelecimento;
 
-    var documents = await supabase
-        .from("profissionais")
-        .select()
-        .eq("email", email)
-        .eq("idestabelecimento", idEstabelecimento);
+    var documents =
+        await supabase.from("profissionais").select().eq("email", email) .isFilter("deleted_at", null);
     if (documents.isNotEmpty) {
       final decrypted = XorCipher()
           .encryptData(documents.first['senha'], documents.first['keyhash']);
 
       if (senha == decrypted) {
-        print('senha: $senha, senha decry $decrypted');
         List<Map<String, dynamic>> listaDiasDaSemanaResultado =
             await getDiasTrabalhoProfissional(
                 idProfissional: documents.first['id']);
         List<Map<String, dynamic>> listaHorariosResultado =
             await geHorariosProfissional(idProfissional: documents.first['id']);
-        print("");
+
         profissional = Profissional(
             uid: documents.first['id'],
             nome: documents.first["nome"],
@@ -51,11 +48,23 @@ class Profissionalrepository {
                 listaDiasDaSemanaResultado.cast<Map<String, dynamic>>(),
             status: documents.first["status"]);
 
+        estabelecimento = await Estabelecimentorepository()
+            .getEstabelecimentoRepositoryId(
+                id: documents.first["idestabelecimento"]);
+
         mensagem = "Login realizado";
-      } else {
+
         return {
           "profissinalObjeto": profissional,
           "mensagem": mensagem,
+          "estabelecimento": estabelecimento,
+        };
+      } else {
+        mensagem = "Senha incorreta";
+        return {
+          "profissinalObjeto": profissional,
+          "mensagem": mensagem,
+          "estabelecimento": estabelecimento,
         };
       }
     }
@@ -63,16 +72,16 @@ class Profissionalrepository {
     return {
       "profissinalObjeto": profissional,
       "mensagem": mensagem,
+      "estabelecimento": estabelecimento,
     };
   }
 
   Future<Map<String, dynamic>> verificarEmailExistir(
-      {required String email, required int idEstabelecimento}) async {
+      {required String email}) async {
     var documents = await supabase
         .from("profissionais")
         .select('id')
-        .eq("email", email)
-        .eq("idestabelecimento", idEstabelecimento)
+        .eq("email", email) .isFilter("deleted_at", null)
         .single();
 
     if (documents.isNotEmpty) {
@@ -94,7 +103,7 @@ class Profissionalrepository {
         .from("profissionais")
         .select()
         .eq("id", id)
-        .eq("idestabelecimento", idEstabelecimento)
+        .eq("idestabelecimento", idEstabelecimento) .isFilter("deleted_at", null)
         .single();
 
     if (documents.isNotEmpty) {
@@ -121,6 +130,17 @@ class Profissionalrepository {
           status: documents["status"]);
     }
     return profissional;
+  }
+
+  Future<int> countProfissionaisAtivo({required int idEstabelecimento}) async {
+    var documentos = await supabase
+        .from("profissionais")
+        .select("status")
+        .eq("idestabelecimento", idEstabelecimento)
+        .eq("status", true) .isFilter("deleted_at", null)
+        .count();
+
+    return documentos.count;
   }
 
   Future<void> createProfissionalRepository(
@@ -186,7 +206,7 @@ class Profissionalrepository {
     var documentsProfissionais = await supabase
         .from("profissionais")
         .select()
-        .eq("idestabelecimento", idEstabecimento);
+        .eq("idestabelecimento", idEstabecimento) .isFilter("deleted_at", null);
 
     for (var profissional in documentsProfissionais) {
       var documentsDiaHorario = await supabase
@@ -272,7 +292,7 @@ class Profissionalrepository {
     var documents = await supabase
         .from("profissionais")
         .select()
-        .eq("idestabelecimento", idEstabecimento);
+        .eq("idestabelecimento", idEstabecimento) .isFilter("deleted_at", null);
     List<Profissional> profissionais = [];
 
     for (var profissional in documents) {
@@ -306,7 +326,7 @@ class Profissionalrepository {
     var documents = await supabase
         .from("profissionais")
         .select('id,nome,fotoperfil,status')
-        .eq("idestabelecimento", idEstabecimento);
+        .eq("idestabelecimento", idEstabecimento) .isFilter("deleted_at", null);
 
     List<Map<String, dynamic>> barbeiros = [];
     for (var profissional in documents) {
@@ -400,7 +420,6 @@ class Profissionalrepository {
   Future<void> atulizarSenhaProfissional(
       {required String senha,
       required int uidProfissional,
-      required int idEstabelecimento,
       required String email}) async {
     final String key = XorCipher().getSecretKey(20);
 
@@ -411,8 +430,7 @@ class Profissionalrepository {
         .from("profissionais")
         .update(profissionalJson)
         .eq("id", uidProfissional)
-        .eq("email", email)
-        .eq("idestabelecimento", idEstabelecimento);
+        .eq("email", email);
   }
 
   Future<void> atualizarDiasDaSemanaProfissional(

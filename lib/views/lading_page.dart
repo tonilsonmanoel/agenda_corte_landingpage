@@ -39,8 +39,8 @@ class _LadingPageState extends State<LadingPage> {
   final keySecao5 = GlobalKey();
   final keySecao6 = GlobalKey();
   bool shimerValue = false;
-  List<Servico> servicos = [];
-  List<Map<String, dynamic>> equipe = [];
+  List<Servico>? servicos;
+  List<Map<String, dynamic>>? equipe;
 
   @override
   void initState() {
@@ -95,7 +95,7 @@ class _LadingPageState extends State<LadingPage> {
   Widget servicosCarrossel() {
     List<String> imgServicosList = [];
     List<String> nomeServicosList = [];
-    for (var servico in servicos) {
+    for (var servico in servicos!) {
       imgServicosList.add(servico.urlImg);
       nomeServicosList.add(servico.nome);
     }
@@ -158,7 +158,7 @@ class _LadingPageState extends State<LadingPage> {
   Widget equipeCarrossel() {
     List<String> imgEquipeList = [];
     List<String> nomeEquipeList = [];
-    for (var equipeValue in equipe) {
+    for (var equipeValue in equipe!) {
       imgEquipeList.add(equipeValue["fotoperfil"]);
       nomeEquipeList.add(equipeValue["nome"]);
     }
@@ -528,8 +528,31 @@ class _LadingPageState extends State<LadingPage> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            if (servicos.isNotEmpty) ...[
+                            if (servicos != null && servicos!.isNotEmpty) ...[
                               servicosCarrossel(),
+                            ] else if (servicos != null &&
+                                servicos!.isEmpty) ...[
+                              SizedBox(
+                                height: 150,
+                              ),
+                              Center(
+                                child: Card(
+                                  color: Colors.black87,
+                                  shadowColor: Colors.grey,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: AutoSizeText(
+                                      "Nenhum serviço disponível no momento.",
+                                      style: GoogleFonts.roboto(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 25),
+                                      minFontSize: 6,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              )
                             ] else ...[
                               Center(
                                 child: CircularProgressIndicator(),
@@ -572,8 +595,20 @@ class _LadingPageState extends State<LadingPage> {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          if (servicos.isNotEmpty) ...[
+                          if (equipe != null && equipe!.isNotEmpty) ...[
                             equipeCarrossel(),
+                          ] else if (equipe != null && equipe!.isEmpty) ...[
+                            Center(
+                              child: AutoSizeText(
+                                "Nenhum profissional disponível no momento.",
+                                style: GoogleFonts.roboto(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18),
+                                minFontSize: 6,
+                                textAlign: TextAlign.center,
+                              ),
+                            )
                           ] else ...[
                             Center(
                               child: CircularProgressIndicator(),

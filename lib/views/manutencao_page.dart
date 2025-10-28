@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class StoreNotFound extends StatelessWidget {
-  const StoreNotFound({super.key});
+class ManutencaoPage extends StatelessWidget {
+  const ManutencaoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Site de barbearia não encontrada'),
+        title: const Text('Site de barbearia em Manutenção'),
       ),
       body: Center(
         child: Padding(
@@ -15,11 +15,11 @@ class StoreNotFound extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(Icons.storefront_outlined,
+              Icon(Icons.miscellaneous_services,
                   size: 96, color: Colors.grey[600]),
               const SizedBox(height: 16),
               const Text(
-                'Desculpe, o site de barbearia não foi encontrada para este domínio.',
+                'Desculpe, o site de barbearia em manutenção\nTente novamente mais tarde.',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18),
               ),

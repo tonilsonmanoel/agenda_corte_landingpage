@@ -27,6 +27,9 @@ class Estabelecimentorepository {
       "razao_social": estabelecimento.razaoSocial,
       "set_up": estabelecimento.setUp,
       "iso_code_phone": estabelecimento.isoCodePhone,
+      "urlbarbearia": estabelecimento.urlBarbearia,
+      "ativo_landing": estabelecimento.ativoLanding,
+      "site_manutencao": estabelecimento.siteManutencao,
     };
     //await db.collection("estabelecimento").add(estabelecimentoJson);
     var idEstabecimento = await supabase
@@ -36,6 +39,40 @@ class Estabelecimentorepository {
         .single();
 
     return idEstabecimento;
+  }
+
+  Future<int> createEstabelecimento(
+      {required Estabelecimento estabelecimento}) async {
+    var estabelecimentoJson = {
+      "nome": estabelecimento.nome,
+      "telefone": estabelecimento.telefone,
+      "codigo_telefone": estabelecimento.codeTelefone,
+      "telefonewhatsapp": estabelecimento.telefoneWhatsapp,
+      "codigo_telefone_whatsapp": estabelecimento.codeTelefoneWhatsapp,
+      "endereco": estabelecimento.endereco,
+      "urliframemapa": estabelecimento.urlIframeMapa,
+      "complemento": estabelecimento.complemento,
+      "cep": estabelecimento.cep,
+      "urllogo": estabelecimento.urlLogo,
+      "cnpj": estabelecimento.cnpj ?? "",
+      "email": estabelecimento.email,
+      "sobre_nos": estabelecimento.sobreNos,
+      "sobre_nos_img": estabelecimento.sobreNosImg,
+      "horario_funcionamento": estabelecimento.horarioFuncionamento,
+      "razao_social": estabelecimento.razaoSocial,
+      "set_up": estabelecimento.setUp,
+      "iso_code_phone": estabelecimento.isoCodePhone,
+      "urlbarbearia": estabelecimento.urlBarbearia,
+      "ativo_landing": estabelecimento.ativoLanding,
+      "site_manutencao": estabelecimento.siteManutencao,
+    };
+    //await db.collection("estabelecimento").add(estabelecimentoJson);
+    var idEstabecimento = await supabase
+        .from("estabelecimento")
+        .insert(estabelecimentoJson)
+        .select('id');
+
+    return idEstabecimento.first["id"];
   }
 
   Future<Estabelecimento> getEstabelecimentoRepository() async {
@@ -62,9 +99,48 @@ class Estabelecimentorepository {
         sobreNosImg: documentos.first["sobre_nos_img"],
         isoCodePhone: documentos.first["iso_code_phone"],
         urlBarbearia: documentos.first["urlbarbearia"],
+        ativoLanding: documentos.first["ativo_landing"],
+        siteManutencao: documentos.first["site_manutencao"],
         urlIframeMapa: documentos.first["urliframemapa"]);
 
     return estabelecimento;
+  }
+
+  Future<Estabelecimento?> getEstabelecimentoRepositoryId(
+      {required int id}) async {
+    // var documentos = await db.collection("estabelecimento").get();
+    var documentos =
+        await supabase.from('estabelecimento').select().eq("id", id);
+
+    if (documentos.isNotEmpty) {
+      Estabelecimento estabelecimento = Estabelecimento(
+          uid: documentos.first["id"],
+          nome: documentos.first["nome"],
+          telefone: documentos.first["telefone"],
+          codeTelefone: documentos.first["codigo_telefone"],
+          telefoneWhatsapp: documentos.first["telefonewhatsapp"],
+          codeTelefoneWhatsapp: documentos.first["codigo_telefone_whatsapp"],
+          cep: documentos.first["cep"],
+          endereco: documentos.first["endereco"],
+          complemento: documentos.first["complemento"],
+          urlLogo: documentos.first["urllogo"],
+          cnpj: documentos.first["cnpj"],
+          email: documentos.first["email"],
+          horarioFuncionamento: documentos.first["horario_funcionamento"],
+          razaoSocial: documentos.first["razao_social"],
+          setUp: documentos.first["set_up"],
+          sobreNos: documentos.first["sobre_nos"],
+          sobreNosImg: documentos.first["sobre_nos_img"],
+          isoCodePhone: documentos.first["iso_code_phone"],
+          urlBarbearia: documentos.first["urlbarbearia"],
+          ativoLanding: documentos.first["ativo_landing"],
+          siteManutencao: documentos.first["site_manutencao"],
+          urlIframeMapa: documentos.first["urliframemapa"]);
+
+      return estabelecimento;
+    } else {
+      return null;
+    }
   }
 
   /// Busca um estabelecimento pelo campo `url_loja`.
@@ -99,6 +175,8 @@ class Estabelecimentorepository {
           sobreNosImg: documentos["sobre_nos_img"],
           isoCodePhone: documentos["iso_code_phone"],
           urlBarbearia: documentos["urlbarbearia"],
+          ativoLanding: documentos["ativo_landing"],
+          siteManutencao: documentos["site_manutencao"],
           urlIframeMapa: documentos["urliframemapa"]);
 
       return estabelecimento;
@@ -163,6 +241,10 @@ class Estabelecimentorepository {
       "horario_funcionamento": estabelecimento.horarioFuncionamento,
       "urliframemapa": estabelecimento.urlIframeMapa,
       "iso_code_phone": estabelecimento.isoCodePhone,
+      "urlbarbearia": estabelecimento.urlBarbearia,
+      "ativo_landing": estabelecimento.ativoLanding,
+      "site_manutencao": estabelecimento.siteManutencao,
+      "set_up": estabelecimento.setUp,
     };
     await supabase
         .from('estabelecimento')
@@ -178,5 +260,45 @@ class Estabelecimentorepository {
         .delete()
         .eq("id", uidEstabelecimento);
     // await db.collection("estabelecimento").doc(uidEstabelecimento).delete();
+  }
+
+  // metodos assinatura
+
+  Future<bool> temPlanoAtivo({required int idEstabecimento}) async {
+    final response = await supabase
+        .from('assinaturas')
+        .select('fim, status')
+        .eq('estabelecimento_id', idEstabecimento)
+        .eq('status', "ativa")
+        .order('fim', ascending: false);
+
+    if (response.isEmpty) return false;
+
+    print("status: ${response[0]['status'].toString()}");
+    print("fim: ${response[0]['fim'].toString()}");
+
+    final fim = DateTime.parse(response[0]['fim']);
+    return fim.isAfter(DateTime.now());
+  }
+
+  Future<List<Map<String, dynamic>>> buscaPlanos() async {
+    final response = await supabase.from('planos').select().eq('ativo', true);
+
+    List<Map<String, dynamic>> planos = [];
+    if (response.isNotEmpty) {
+      planos = response
+          .map((p) => {
+                "id": p["id"],
+                "nome": p["nome"],
+                "descricao": p["descricao"],
+                "valor": p["valor"],
+                "quantidade_dias": p["quantidade_dias"],
+                "ativo": p["ativo"],
+              })
+          .toList();
+
+      print("planos nome: ${planos[0]['nome'].toString()}");
+    }
+    return planos;
   }
 }
