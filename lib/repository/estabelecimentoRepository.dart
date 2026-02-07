@@ -28,12 +28,8 @@ class Estabelecimentorepository {
       "set_up": estabelecimento.setUp,
       "iso_code_phone": estabelecimento.isoCodePhone,
       "urlbarbearia": estabelecimento.urlBarbearia,
-<<<<<<< HEAD
       "ativo_landing": estabelecimento.ativoLanding,
       "site_manutencao": estabelecimento.siteManutencao,
-=======
-      "ativo_landing": estabelecimento.ativoLanding
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
     };
     //await db.collection("estabelecimento").add(estabelecimentoJson);
     var idEstabecimento = await supabase
@@ -104,10 +100,7 @@ class Estabelecimentorepository {
         isoCodePhone: documentos.first["iso_code_phone"],
         urlBarbearia: documentos.first["urlbarbearia"],
         ativoLanding: documentos.first["ativo_landing"],
-<<<<<<< HEAD
         siteManutencao: documentos.first["site_manutencao"],
-=======
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
         urlIframeMapa: documentos.first["urliframemapa"]);
 
     return estabelecimento;
@@ -141,10 +134,7 @@ class Estabelecimentorepository {
           isoCodePhone: documentos.first["iso_code_phone"],
           urlBarbearia: documentos.first["urlbarbearia"],
           ativoLanding: documentos.first["ativo_landing"],
-<<<<<<< HEAD
           siteManutencao: documentos.first["site_manutencao"],
-=======
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
           urlIframeMapa: documentos.first["urliframemapa"]);
 
       return estabelecimento;
@@ -186,10 +176,7 @@ class Estabelecimentorepository {
           isoCodePhone: documentos["iso_code_phone"],
           urlBarbearia: documentos["urlbarbearia"],
           ativoLanding: documentos["ativo_landing"],
-<<<<<<< HEAD
           siteManutencao: documentos["site_manutencao"],
-=======
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
           urlIframeMapa: documentos["urliframemapa"]);
 
       return estabelecimento;
@@ -255,13 +242,9 @@ class Estabelecimentorepository {
       "urliframemapa": estabelecimento.urlIframeMapa,
       "iso_code_phone": estabelecimento.isoCodePhone,
       "urlbarbearia": estabelecimento.urlBarbearia,
-<<<<<<< HEAD
       "ativo_landing": estabelecimento.ativoLanding,
       "site_manutencao": estabelecimento.siteManutencao,
       "set_up": estabelecimento.setUp,
-=======
-      "ativo_landing": estabelecimento.ativoLanding
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
     };
     await supabase
         .from('estabelecimento')

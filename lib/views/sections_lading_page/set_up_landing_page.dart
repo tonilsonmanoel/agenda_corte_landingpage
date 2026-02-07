@@ -672,10 +672,7 @@ class _SetUpLandingPageState extends State<SetUpLandingPage> {
                                           sobreNos: sobreNosController.text,
                                           sobreNosImg: sobreNosImgUrl,
                                           ativoLanding: false,
-<<<<<<< HEAD
                                           siteManutencao: false,
-=======
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
                                           urlIframeMapa:
                                               urlIframeMapaController.text,
                                           urlBarbearia: urlIBarbeariaController

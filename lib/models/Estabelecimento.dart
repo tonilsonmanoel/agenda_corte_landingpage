@@ -20,10 +20,7 @@ class Estabelecimento {
   String isoCodePhone;
   String urlBarbearia;
   bool ativoLanding;
-<<<<<<< HEAD
   bool siteManutencao;
-=======
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
 
   Estabelecimento(
       {required this.nome,
@@ -46,10 +43,7 @@ class Estabelecimento {
       this.sobreNos,
       this.sobreNosImg,
       required this.ativoLanding,
-<<<<<<< HEAD
       required this.siteManutencao,
-=======
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
       required this.urlBarbearia});
   Estabelecimento.vazio(
       {this.nome = "",
@@ -70,9 +64,6 @@ class Estabelecimento {
       this.sobreNosImg = "",
       this.isoCodePhone = "",
       this.ativoLanding = false,
-<<<<<<< HEAD
       this.siteManutencao = false,
-=======
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
       this.urlBarbearia = ""});
 }
