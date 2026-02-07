@@ -17,7 +17,11 @@ class Profissionalrepository {
     Estabelecimento? estabelecimento;
 
     var documents =
+<<<<<<< HEAD
         await supabase.from("profissionais").select().eq("email", email) .isFilter("deleted_at", null);
+=======
+        await supabase.from("profissionais").select().eq("email", email);
+>>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
     if (documents.isNotEmpty) {
       final decrypted = XorCipher()
           .encryptData(documents.first['senha'], documents.first['keyhash']);
@@ -81,7 +85,11 @@ class Profissionalrepository {
     var documents = await supabase
         .from("profissionais")
         .select('id')
+<<<<<<< HEAD
         .eq("email", email) .isFilter("deleted_at", null)
+=======
+        .eq("email", email)
+>>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
         .single();
 
     if (documents.isNotEmpty) {
@@ -137,7 +145,11 @@ class Profissionalrepository {
         .from("profissionais")
         .select("status")
         .eq("idestabelecimento", idEstabelecimento)
+<<<<<<< HEAD
         .eq("status", true) .isFilter("deleted_at", null)
+=======
+        .eq("status", true)
+>>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
         .count();
 
     return documentos.count;
