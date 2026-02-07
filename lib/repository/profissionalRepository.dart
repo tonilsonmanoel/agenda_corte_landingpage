@@ -16,12 +16,11 @@ class Profissionalrepository {
     Profissional? profissional;
     Estabelecimento? estabelecimento;
 
-    var documents =
-<<<<<<< HEAD
-        await supabase.from("profissionais").select().eq("email", email) .isFilter("deleted_at", null);
-=======
-        await supabase.from("profissionais").select().eq("email", email);
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
+    var documents = await supabase
+        .from("profissionais")
+        .select()
+        .eq("email", email)
+        .isFilter("deleted_at", null);
     if (documents.isNotEmpty) {
       final decrypted = XorCipher()
           .encryptData(documents.first['senha'], documents.first['keyhash']);
@@ -85,11 +84,8 @@ class Profissionalrepository {
     var documents = await supabase
         .from("profissionais")
         .select('id')
-<<<<<<< HEAD
-        .eq("email", email) .isFilter("deleted_at", null)
-=======
         .eq("email", email)
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
+        .isFilter("deleted_at", null)
         .single();
 
     if (documents.isNotEmpty) {
@@ -111,7 +107,8 @@ class Profissionalrepository {
         .from("profissionais")
         .select()
         .eq("id", id)
-        .eq("idestabelecimento", idEstabelecimento) .isFilter("deleted_at", null)
+        .eq("idestabelecimento", idEstabelecimento)
+        .isFilter("deleted_at", null)
         .single();
 
     if (documents.isNotEmpty) {
@@ -145,11 +142,8 @@ class Profissionalrepository {
         .from("profissionais")
         .select("status")
         .eq("idestabelecimento", idEstabelecimento)
-<<<<<<< HEAD
-        .eq("status", true) .isFilter("deleted_at", null)
-=======
         .eq("status", true)
->>>>>>> 239d25864a887bf664e2b0347b7de47912c0a8f3
+        .isFilter("deleted_at", null)
         .count();
 
     return documentos.count;
@@ -218,7 +212,8 @@ class Profissionalrepository {
     var documentsProfissionais = await supabase
         .from("profissionais")
         .select()
-        .eq("idestabelecimento", idEstabecimento) .isFilter("deleted_at", null);
+        .eq("idestabelecimento", idEstabecimento)
+        .isFilter("deleted_at", null);
 
     for (var profissional in documentsProfissionais) {
       var documentsDiaHorario = await supabase
@@ -304,7 +299,8 @@ class Profissionalrepository {
     var documents = await supabase
         .from("profissionais")
         .select()
-        .eq("idestabelecimento", idEstabecimento) .isFilter("deleted_at", null);
+        .eq("idestabelecimento", idEstabecimento)
+        .isFilter("deleted_at", null);
     List<Profissional> profissionais = [];
 
     for (var profissional in documents) {
@@ -338,7 +334,8 @@ class Profissionalrepository {
     var documents = await supabase
         .from("profissionais")
         .select('id,nome,fotoperfil,status')
-        .eq("idestabelecimento", idEstabecimento) .isFilter("deleted_at", null);
+        .eq("idestabelecimento", idEstabecimento)
+        .isFilter("deleted_at", null);
 
     List<Map<String, dynamic>> barbeiros = [];
     for (var profissional in documents) {
